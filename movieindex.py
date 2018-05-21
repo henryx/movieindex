@@ -9,6 +9,8 @@ import argparse
 import configparser
 import logging
 
+import imdb
+
 __author__ = "Enrico Bianchi"
 __copyright__ = "Copyright 2017, Enrico Bianchi"
 __credits__ = ["Enrico Bianchi", ]
@@ -67,14 +69,31 @@ def initargs():
     return parser
 
 
-def fetch(top, bottom):
+def fetch(logger, top, bottom):
     """
     Retrieve data from IMDB
+    :param logger: a logger for registering operations
     :param top: fetch top 250 movies
     :param bottom: fetch bottom 100 movies
     :return: Data fetched
     """
-    pass
+
+    ia = imdb.IMDb()
+    fetched = []
+
+    if not top and not bottom:
+        logger.debug("No dataset selected")
+        raise ValueError("No dataset selected")
+
+    if top:
+        logger.debug("Fetch top 250 movies")
+        fetched += ia.get_top250_movies()
+
+    if bottom:
+        logger.debug("Fetch bottom 100 movies")
+        fetched += ia.get_bottom100_movies()
+
+    return fetched
 
 
 def main():
@@ -96,7 +115,8 @@ def main():
     logger = setlog("movieindex", cfg["general"]["logfile"], cfg["general"]["loglevel"])
     logger.debug("Started application")
 
-    data = fetch(args.top, args.bottom)
+    logger.debug("Fetch data")
+    movies = fetch(logger, args.top, args.bottom)
 
     logger.debug("Ended application")
 
