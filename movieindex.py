@@ -67,6 +67,16 @@ def initargs():
     return parser
 
 
+def fetch(top, bottom):
+    """
+    Retrieve data from IMDB
+    :param top: fetch top 250 movies
+    :param bottom: fetch bottom 100 movies
+    :return: Data fetched
+    """
+    pass
+
+
 def main():
     """
     Main function
@@ -85,6 +95,9 @@ def main():
 
     logger = setlog("movieindex", cfg["general"]["logfile"], cfg["general"]["loglevel"])
     logger.debug("Started application")
+
+    data = fetch(args.top, args.bottom)
+
     logger.debug("Ended application")
 
 
