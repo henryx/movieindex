@@ -5,6 +5,7 @@
 # Project       movieindex
 # Description   An IMDB movie indexer
 # License       GPL version 2 (see GPL.txt for details)
+import argparse
 
 __author__ = "Enrico Bianchi"
 __copyright__ = "Copyright 2017, Enrico Bianchi"
@@ -16,12 +17,24 @@ __status__ = "Development"
 __version__ = "0.0.0"
 
 
+def init_args():
+    """
+    Initialize arguments
+    :return: A parser with arguments defined for the application
+    """
+
+    parser = argparse.ArgumentParser(description="IMDB movie indexer")
+    parser.add_argument("-c", "--cfg", help="Set the configuration file")
+
+    return parser
+
+
 def main():
     """
     Main function
     :return:
     """
-    pass
+    args = init_args().parse_args()
 
 
 if __name__ == '__main__':
