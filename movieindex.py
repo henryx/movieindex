@@ -6,6 +6,7 @@
 # Description   An IMDB movie indexer
 # License       GPL version 2 (see GPL.txt for details)
 import argparse
+import logging
 
 __author__ = "Enrico Bianchi"
 __copyright__ = "Copyright 2017, Enrico Bianchi"
@@ -15,6 +16,39 @@ __maintainer__ = "Enrico Bianchi"
 __email__ = "enrico.bianchi@gmail.com"
 __status__ = "Development"
 __version__ = "0.0.0"
+
+
+def setlog(application, filename, level):
+    """
+    Set logging parameters
+    :param application: Application name
+    :param filename: File name to save the log. If not specified, it uses standard error
+    :param level: Set log level
+    :return: An instance of the logger
+    """
+
+    LEVELS = {
+        "debug": logging.DEBUG,
+        "info": logging.INFO,
+        "warning": logging.WARNING,
+        "error": logging.ERROR,
+        "critical": logging.CRITICAL
+    }
+
+    logger = logging.getLogger(application)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    if filename:
+        handler = logging.FileHandler(filename=filename)
+    else:
+        handler = logging.StreamHandler()
+
+    handler.setLevel(LEVELS.get(level.lower(), logging.NOTSET))
+    handler.setFormatter(formatter)
+
+    logger.addHandler(handler)
+
+    return logger
 
 
 def initargs():
