@@ -96,6 +96,16 @@ def fetch(logger, top, bottom):
     return fetched
 
 
+def store_to_es(logger, cfgsection, movie):
+    """
+    Store data movie to Elasticsearch
+    :param logger: A logger for registering operations
+    :param cfgsection: Configuration section
+    :param movie: Movie
+    :return:
+    """
+
+
 def save(logger, cfg, movies):
     """
     Save data to storage
@@ -104,7 +114,6 @@ def save(logger, cfg, movies):
     :param movies: A list containing fetched IMDB movies
     :return:
     """
-
     ia = imdb.IMDb()
 
     for movie in movies:
@@ -125,6 +134,9 @@ def save(logger, cfg, movies):
                 "actor": actor["name"],
                 "role": actor.get("role")
             })
+
+        if cfg["general"]["engine"] == "elasticsearch":
+            store_to_es(logger, cfg["elasticsearch"], data)
 
 
 def main():
