@@ -6,7 +6,11 @@
 # Description   An IMDB movie indexer
 # License       GPL version 2 (see GPL.txt for details)
 import argparse
+import configparser
 import logging
+import os
+
+import sys
 
 __author__ = "Enrico Bianchi"
 __copyright__ = "Copyright 2017, Enrico Bianchi"
@@ -70,7 +74,20 @@ def main():
     Main function
     :return:
     """
+
     args = initargs().parse_args()
+    cfg = configparser.ConfigParser()
+
+    if not os.path.exists(args.cfg):
+        logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s")
+        logging.fatal("Cannot open the configuration file {}: file not found".format(args.cfg))
+        sys.exit(1)
+    elif not os.path.isfile(args.cfg):
+        logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s")
+        logging.fatal("Cannot open the configuration file {}: is not a file".format(args.cfg))
+        sys.exit(1)
+    else:
+        cfg.read(args.cfg)
 
 
 if __name__ == '__main__':
