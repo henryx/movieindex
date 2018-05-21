@@ -114,12 +114,17 @@ def save(logger, cfg, movies):
     :param movies: A list containing fetched IMDB movies
     :return:
     """
+
+    # FIXME: currently there is a bug on the IMDBpy in actor's role
+    #        (refers https://github.com/alberanid/imdbpy/issues/144 )
+
     ia = imdb.IMDb()
 
     for movie in movies:
         ia.update(movie)
 
         data = {
+            "id": movie.movieID,
             "name": movie["title"],
             "kind": movie["kind"],
             "year": movie["year"],
@@ -132,7 +137,7 @@ def save(logger, cfg, movies):
         for actor in movie.get("cast"):
             data["cast"].append({
                 "actor": actor["name"],
-                "role": actor.get("role")
+                "role": actor.notes
             })
 
         if cfg["general"]["engine"] == "elasticsearch":
