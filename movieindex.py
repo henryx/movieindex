@@ -17,7 +17,7 @@ __status__ = "Development"
 __version__ = "0.0.0"
 
 
-def init_args():
+def initargs():
     """
     Initialize arguments
     :return: A parser with arguments defined for the application
@@ -36,7 +36,7 @@ def main():
     Main function
     :return:
     """
-    args = init_args().parse_args()
+    args = initargs().parse_args()
 
 
 if __name__ == '__main__':
