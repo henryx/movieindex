@@ -95,6 +95,14 @@ def fetch(logger, top, bottom):
 
     return fetched
 
+def save(logger, cfg, movies):
+    """
+    Save data to storage
+    :param logger:
+    :param movies:
+    :return:
+    """
+
 
 def main():
     """
@@ -117,6 +125,7 @@ def main():
 
     logger.debug("Fetch data")
     movies = fetch(logger, args.top, args.bottom)
+    save(logger, cfg, movies)
 
     logger.debug("Ended application")
 
