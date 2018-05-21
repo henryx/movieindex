@@ -62,7 +62,7 @@ def initargs():
     """
 
     parser = argparse.ArgumentParser(description="IMDB movie indexer")
-    parser.add_argument("-c", "--cfg", help="Set the configuration file")
+    parser.add_argument("-c", "--cfg", default="movieindex.cfg", help="Set the configuration file")
     parser.add_argument("-T", "--top", help="Retrieve top 250 movies")
     parser.add_argument("-B", "--bottom", help="Retrieve bottom 100 movies")
 
