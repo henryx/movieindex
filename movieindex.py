@@ -95,6 +95,7 @@ def fetch(logger, top, bottom):
 
     return fetched
 
+
 def save(logger, cfg, movies):
     """
     Save data to storage
@@ -103,6 +104,27 @@ def save(logger, cfg, movies):
     :param movies: A list containing fetched IMDB movies
     :return:
     """
+
+    ia = imdb.IMDb()
+
+    for movie in movies:
+        ia.update(movie)
+
+        data = {
+            "name": movie["title"],
+            "kind": movie["kind"],
+            "year": movie["year"],
+            "genres": movie["genres"],
+            "rating": movie["rating"],
+            "directors": [i["name"] for i in movie["director"]],
+            "cast": []
+        }
+
+        for actor in movie.get("cast"):
+            data["cast"].append({
+                "actor": actor["name"],
+                "role": actor.get("role")
+            })
 
 
 def main():
