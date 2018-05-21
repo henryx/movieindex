@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2017 Enrico Bianchi (enrico.bianchi@gmail.com)
+# Copyright (C) 2018 Enrico Bianchi (enrico.bianchi@gmail.com)
 # Project       movieindex
 # Description   An IMDB movie indexer
-# License       GPL version 2 (see GPL.txt for details)
+# License       GPL version 2 (see LICENSE for details)
 import argparse
 import configparser
 import logging
@@ -12,7 +12,7 @@ import logging
 import imdb
 
 __author__ = "Enrico Bianchi"
-__copyright__ = "Copyright 2017, Enrico Bianchi"
+__copyright__ = "Copyright 2018, Enrico Bianchi"
 __credits__ = ["Enrico Bianchi", ]
 __license__ = "GPLv2"
 __maintainer__ = "Enrico Bianchi"
@@ -72,9 +72,9 @@ def initargs():
 def fetch(logger, top, bottom):
     """
     Retrieve data from IMDB
-    :param logger: a logger for registering operations
-    :param top: fetch top 250 movies
-    :param bottom: fetch bottom 100 movies
+    :param logger: A logger for registering operations
+    :param top: Fetch top 250 movies
+    :param bottom: Fetch bottom 100 movies
     :return: Data fetched
     """
 
@@ -98,8 +98,9 @@ def fetch(logger, top, bottom):
 def save(logger, cfg, movies):
     """
     Save data to storage
-    :param logger:
-    :param movies:
+    :param logger: A logger for registering operations
+    :param cfg: Configuration data
+    :param movies: A list containing fetched IMDB movies
     :return:
     """
 
