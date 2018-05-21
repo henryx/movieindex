@@ -82,6 +82,10 @@ def main():
         logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s")
         logging.fatal("Cannot open the configuration file {}: {}".format(args.cfg, e.strerror))
 
+    logger = setlog("movieindex", cfg["general"]["logfile"], cfg["general"]["loglevel"])
+    logger.debug("Started application")
+    logger.debug("Ended application")
+
 
 if __name__ == '__main__':
     main()
