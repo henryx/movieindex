@@ -37,6 +37,7 @@ def setlog(application, filename, level):
     }
 
     logger = logging.getLogger(application)
+    logger.setLevel(LEVELS.get(level.lower(), logging.NOTSET))
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
     if filename:
