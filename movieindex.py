@@ -106,6 +106,17 @@ def store_to_es(logger, cfgsection, movie):
     """
 
 
+def store_to_mongo(logger, cfgsection, movie):
+    """
+    Stora data movie to MongoDB
+    :param logger: A logger for registering operations
+    :param cfgsection: Configuration section
+    :param movie: Movie
+    :return:
+    """
+
+
+
 def save(logger, cfg, movies):
     """
     Save data to storage
@@ -142,6 +153,8 @@ def save(logger, cfg, movies):
 
         if cfg["general"]["engine"] == "elasticsearch":
             store_to_es(logger, cfg["elasticsearch"], data)
+        elif cfg["general"]["engine"] == "mongo":
+            store_to_mongo(logger, cfg["mongo"], data)
 
 
 def main():
