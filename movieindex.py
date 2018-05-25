@@ -98,29 +98,6 @@ def fetch(logger, top, bottom):
     return fetched
 
 
-def store_to_es(logger, cfgsection, movie):
-    """
-    Store data movie to Elasticsearch
-    :param logger: A logger for registering operations
-    :param cfgsection: Configuration section
-    :param movie: Movie
-    :return:
-    """
-
-
-def store_to_mongo(logger, cfgsection, movie):
-    """
-    Stora data movie to MongoDB
-    :param logger: A logger for registering operations
-    :param cfgsection: Configuration section
-    :param movie: Movie
-    :return:
-    """
-
-    with movieindex.store.MongoDB(cfgsection) as db:
-        db.store(movie)
-
-
 def save(logger, cfg, movies):
     """
     Save data to storage
@@ -156,9 +133,10 @@ def save(logger, cfg, movies):
             })
 
         if cfg["general"]["engine"] == "elasticsearch":
-            store_to_es(logger, cfg["elasticsearch"], data)
+            pass
         elif cfg["general"]["engine"] == "mongo":
-            store_to_mongo(logger, cfg["mongo"], data)
+            with movieindex.store.MongoDB(cfg["mongo"]) as db:
+                db.store(movie)
 
 
 def main():
