@@ -9,8 +9,26 @@ import pymongo
 
 
 class Elasticsearch:
+    _host = None
+    _port = None
+    _index = None
+
+    @property
+    def host(self):
+        return self._host
+
+    @property
+    def port(self):
+        return self._port
+
+    @property
+    def index(self):
+        return self._index
+
     def __init__(self, cfg):
-        pass
+        self._host = cfg["host"]
+        self._port = cfg["port"] if "port" in cfg else 9200
+        self._index = cfg["index"]
 
     def __enter__(self):
         return self
