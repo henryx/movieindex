@@ -11,7 +11,7 @@ import logging
 
 import imdb
 
-import movieindex
+import movieindex.store
 
 __author__ = "Enrico Bianchi"
 __copyright__ = "Copyright 2018, Enrico Bianchi"
