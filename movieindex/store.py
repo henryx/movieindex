@@ -8,6 +8,23 @@ import bson
 import pymongo
 
 
+class Elasticsearch:
+    def __init__(self, cfg):
+        pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
+    def exists(self, data):
+        pass
+
+    def store(self, data):
+        pass
+
+
 class MongoDB:
     _connection = None
     _database = None
