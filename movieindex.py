@@ -11,6 +11,8 @@ import logging
 
 import imdb
 
+import movieindex
+
 __author__ = "Enrico Bianchi"
 __copyright__ = "Copyright 2018, Enrico Bianchi"
 __credits__ = ["Enrico Bianchi", ]
@@ -115,6 +117,8 @@ def store_to_mongo(logger, cfgsection, movie):
     :return:
     """
 
+    with movieindex.store.MongoDB(cfgsection) as db:
+        db.store(movie)
 
 
 def save(logger, cfg, movies):
