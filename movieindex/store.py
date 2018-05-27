@@ -45,13 +45,15 @@ class Elasticsearch:
     def exists(self, data):
         pass
 
-    def store(self, data):
+    def store(self, data, docid=None):
         if self.url.scheme == "http":
             conn = http.client.HTTPConnection(self.url.netloc)
         else:
             conn = http.client.HTTPSConnection(self.url.netloc)
 
         loc = "/".join([self._index, "movie"])
+        if docid:
+            loc = "/".join([loc, docid])
 
         conn.request("POST", loc,
                      headers={'User-agent': 'copy index', 'Accept': 'application/json',
@@ -60,7 +62,10 @@ class Elasticsearch:
         resp = conn.getresponse()
 
         if resp.status not in [200, 201]:
-            raise ValueError("Cannot insert record {}: {}".format(json.dumps(data), resp.reason))
+            if docid:
+                raise ValueError("Cannot insert record {}: {}".format(docid, resp.reason))
+            else:
+                raise ValueError("Cannot insert record {}: {}".format(json.dumps(data), resp.reason))
 
 
 class MongoDB:
@@ -116,8 +121,11 @@ class MongoDB:
 
         return False if cur == 0 else True
 
-    def store(self, data):
+    def store(self, data, docid=None):
         collection = self._database[self.collection]
+
+        if docid:
+            data["_id"] = docid
 
         try:
             collection.insert_one(data)
