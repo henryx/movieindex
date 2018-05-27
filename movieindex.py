@@ -116,7 +116,6 @@ def save(logger, cfg, movies):
         ia.update(movie)
 
         data = {
-            "id": movie.movieID,
             "name": movie["title"],
             "kind": movie["kind"],
             "year": movie["year"],
@@ -134,10 +133,10 @@ def save(logger, cfg, movies):
 
         if cfg["general"]["engine"] == "elasticsearch":
             with movieindex.store.Elasticsearch(cfg["elasticsearch"]) as db:
-                db.store(data)
+                db.store(data, movie.movieID)
         elif cfg["general"]["engine"] == "mongo":
             with movieindex.store.MongoDB(cfg["mongo"]) as db:
-                db.store(data)
+                db.store(data, movie.movieID)
 
 
 def main():
