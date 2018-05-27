@@ -42,14 +42,19 @@ class Elasticsearch:
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass
 
-    def exists(self, data):
-        pass
-
-    def store(self, data, docid=None):
+    def _connect(self):
         if self.url.scheme == "http":
             conn = http.client.HTTPConnection(self.url.netloc)
         else:
             conn = http.client.HTTPSConnection(self.url.netloc)
+
+        return conn
+
+    def exists(self, data):
+        pass
+
+    def store(self, data, docid=None):
+        conn = self._connect()
 
         loc = "/".join([self._index, "movie"])
         if docid:
