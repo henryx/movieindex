@@ -50,13 +50,13 @@ class Elasticsearch:
 
         return conn
 
-    def count(self, docid=None):
+    def count(self, docid=None, doctype=None):
         conn = self._connect()
 
         if docid:
-            loc = "/".join([self.index, "_search", docid])
+            loc = "/".join([self.index, doctype, "_count?q=_id:" + docid])
         else:
-            loc = "/".join([self.index, "_search"])
+            loc = "/".join([self.index, doctype, "_count"])
 
         conn.request("GET", loc)
         resp = conn.getresponse()
@@ -74,7 +74,7 @@ class Elasticsearch:
 
         result = resp.read()
         data = json.loads(result)
-        return data["hits"]["total"]
+        return data["count"]
 
     def exists(self, data):
         if "_id" in data:
