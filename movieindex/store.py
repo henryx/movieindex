@@ -4,6 +4,8 @@
 # Project       movieindex
 # Description   An IMDB movie indexer
 # License       GPL version 2 (see LICENSE for details)
+import http.client
+import json
 import urllib.parse
 
 import bson
@@ -44,7 +46,21 @@ class Elasticsearch:
         pass
 
     def store(self, data):
-        pass
+        if self.url.scheme == "http":
+            conn = http.client.HTTPConnection(self.url.netloc)
+        else:
+            conn = http.client.HTTPSConnection(self.url.netloc)
+
+        loc = "/".join([self._index, "movie"])
+
+        conn.request("POST", loc,
+                     headers={'User-agent': 'copy index', 'Accept': 'application/json',
+                              'Content-Type': 'application/json; charset=utf-8'},
+                     body=json.dumps(data))
+        resp = conn.getresponse()
+
+        if resp.status not in [200, 201]:
+            raise ValueError("Cannot insert record {}: {}".format(json.dumps(data), resp.reason))
 
 
 class MongoDB:
