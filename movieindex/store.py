@@ -50,6 +50,29 @@ class Elasticsearch:
 
         return conn
 
+    def count(self, docid=None):
+        conn = self._connect()
+
+        if docid:
+            loc = "/".join([self.index, "_search", docid])
+        else:
+            loc = "/".join([self.index, "_search"])
+
+        conn.request("GET", loc)
+        resp = conn.getresponse()
+
+        if resp.status not in [200, 201]:
+            if docid:
+                raise ValueError("Cannot count record for index {} with document ID {}: {}".format(self.index,
+                                                                                                   docid,
+                                                                                                   resp.reason))
+            else:
+                raise ValueError("Cannot count record for inxed {}: {}".format(self.index, resp.reason))
+
+        result = resp.read()
+        data = json.loads(result)
+        return data["hits"]["total"]
+
     def exists(self, data):
         pass
 
@@ -112,6 +135,9 @@ class MongoDB:
 
     def close(self):
         self._connection.close()
+
+    def count(selfs, docid=None):
+        pass
 
     def exists(self, data):
         """
