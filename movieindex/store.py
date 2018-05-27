@@ -141,8 +141,15 @@ class MongoDB:
     def close(self):
         self._connection.close()
 
-    def count(selfs, docid=None):
-        pass
+    def count(self, docid=None):
+        collection = self._database[self.collection]
+
+        if docid:
+            cur = collection.count({"_id": docid})
+        else:
+            cur = collection.count()
+
+        return cur
 
     def exists(self, data):
         """
