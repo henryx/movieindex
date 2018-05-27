@@ -28,7 +28,7 @@ class Elasticsearch:
         scheme = cfg["scheme"]
         self._index = cfg["index"]
 
-        url = scheme + "://" + host + "/" + port
+        url = scheme + "://" + host + ":" + port
         self._url = urllib.parse.urlparse(url)
 
         if not self.url.scheme:
