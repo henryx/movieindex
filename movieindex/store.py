@@ -74,7 +74,12 @@ class Elasticsearch:
         return data["hits"]["total"]
 
     def exists(self, data):
-        pass
+        if "_id" in data:
+            counted = self.count(data["_id"])
+        else:
+            counted = self.count()
+
+        return False if counted == 0 else True
 
     def store(self, data, docid=None):
         conn = self._connect()
