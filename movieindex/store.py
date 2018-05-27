@@ -76,9 +76,9 @@ class Elasticsearch:
         data = json.loads(result)
         return data["count"]
 
-    def exists(self, data):
-        if "_id" in data:
-            counted = self.count(data["_id"])
+    def exists(self, docid, doctype=None):
+        if docid:
+            counted = self.count(docid, doctype)
         else:
             counted = self.count()
 
