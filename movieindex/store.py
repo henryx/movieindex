@@ -4,31 +4,35 @@
 # Project       movieindex
 # Description   An IMDB movie indexer
 # License       GPL version 2 (see LICENSE for details)
+import urllib.parse
+
 import bson
 import pymongo
 
 
 class Elasticsearch:
-    _host = None
-    _port = None
+    _url = None
     _index = None
 
     @property
-    def host(self):
-        return self._host
-
-    @property
-    def port(self):
-        return self._port
+    def url(self):
+        return self._url
 
     @property
     def index(self):
         return self._index
 
     def __init__(self, cfg):
-        self._host = cfg["host"]
-        self._port = cfg["port"] if "port" in cfg else 9200
+        host = cfg["host"]
+        port = cfg["port"] if "port" in cfg else 9200
+        scheme = cfg["scheme"]
         self._index = cfg["index"]
+
+        url = scheme + "://" + host + "/" + port
+        self._url = urllib.parse.urlparse(url)
+
+        if not self.url.scheme:
+            raise ValueError("Malformed source URL: {}".format(url))
 
     def __enter__(self):
         return self
