@@ -62,6 +62,9 @@ class Elasticsearch:
         resp = conn.getresponse()
 
         if resp.status not in [200, 201]:
+            if resp.status == 404:
+                return 0
+
             if docid:
                 raise ValueError("Cannot count record for index {} with document ID {}: {}".format(self.index,
                                                                                                    docid,
@@ -151,18 +154,14 @@ class MongoDB:
 
         return cur
 
-    def exists(self, data):
+    def exists(self, docid):
         """
-        Check if data is in json
-        :param data: JSON that contains data
+        Check if document ID exists in MongoDB
+        :param docid: The document ID
         :return: True if is already stored else False
         """
 
-        if "_id" in data:
-            cur = self.count(data["_id"])
-        else:
-            cur = self.count()
-
+        cur = self.count(docid)
         return False if cur == 0 else True
 
     def store(self, data, docid=None):
