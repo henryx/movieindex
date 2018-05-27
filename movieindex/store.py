@@ -158,9 +158,10 @@ class MongoDB:
         :return: True if is already stored else False
         """
 
-        collection = self._database[self.collection]
-
-        cur = collection.count(data)
+        if "_id" in data:
+            cur = self.count(data["_id"])
+        else:
+            cur = self.count()
 
         return False if cur == 0 else True
 
