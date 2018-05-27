@@ -84,10 +84,10 @@ class Elasticsearch:
 
         return False if counted == 0 else True
 
-    def store(self, data, docid=None):
+    def store(self, data, docid=None, doctype=None):
         conn = self._connect()
 
-        loc = "/".join([self._index, "movie"])
+        loc = "/".join([self._index, doctype])
         if docid:
             loc = "/".join([loc, docid])
 
