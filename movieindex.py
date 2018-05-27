@@ -134,10 +134,10 @@ def save(logger, cfg, movies):
 
         if cfg["general"]["engine"] == "elasticsearch":
             with movieindex.store.Elasticsearch(cfg["elasticsearch"]) as db:
-                db.store(movie)
+                db.store(data)
         elif cfg["general"]["engine"] == "mongo":
             with movieindex.store.MongoDB(cfg["mongo"]) as db:
-                db.store(movie)
+                db.store(data)
 
 
 def main():
